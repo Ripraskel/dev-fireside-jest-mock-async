@@ -22,12 +22,23 @@ const pikachu = {
 describe("Test getPokemon()", () =>  {
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.clearAllMocks();
     });
 
     test("Mock API call to return Pikachu", async () => {
         
-        axios.get.mockImplementationOnce(() => Promise.resolve(dummyData));
+        //axios.get.mockImplementationOnce(() => Promise.resolve(dummyData));
+        axios.get.mockResolvedValue(dummyData)
+
+        const pokemon = await getPokemon(dummyData.data.id);
+        
+        expect.assertions(2);
+        expect(axios.get).toBeCalledTimes(1);
+        expect(pokemon).toEqual(pikachu);
+    });
+
+    test("Mock API call to return Pikachu", async () => {
+        
+        //axios.get.mockResolvedValue(dummyData)
 
         const pokemon = await getPokemon(dummyData.data.id);
         
